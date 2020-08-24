@@ -65,6 +65,11 @@ impl<T> Stream<T>
     {
         self.buf.push(item);
     }
+
+    pub fn as_slice(&self) -> &[T]
+    {
+        self.buf.as_slice()
+    }
 }
 
 impl Read for Stream<u8>
