@@ -70,6 +70,11 @@ impl<T> Stream<T>
     {
         self.buf.as_slice()
     }
+
+    pub fn len(&self) -> usize
+    {
+        self.buf.len()
+    }
 }
 
 impl Read for Stream<u8>
