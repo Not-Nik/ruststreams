@@ -42,47 +42,39 @@ mod tests {
 use std::vec::Vec;
 use std::io::{Read, Result, Error, ErrorKind, Write};
 
-pub struct Stream<T>
-{
+pub struct Stream<T> {
     buf: Vec<T>
 }
 
-impl<T> Stream<T>
-{
+impl<T> Stream<T> {
     pub fn new() -> Stream<T> {
         Stream { buf: vec![] }
     }
 
-    pub fn read_item(&mut self) -> Option<T>
-    {
+    pub fn read_item(&mut self) -> Option<T> {
         self.buf.reverse();
         let res = self.buf.pop();
         self.buf.reverse();
         res
     }
 
-    pub fn write_item(&mut self, item: T)
-    {
+    pub fn write_item(&mut self, item: T) {
         self.buf.push(item);
     }
 
-    pub fn as_slice(&self) -> &[T]
-    {
+    pub fn as_slice(&self) -> &[T] {
         self.buf.as_slice()
     }
 
-    pub fn len(&self) -> usize
-    {
+    pub fn len(&self) -> usize {
         self.buf.len()
     }
 }
 
-impl Read for Stream<u8>
-{
+impl Read for Stream<u8> {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let x = 0;
-        for x in 0..buf.len()
-        {
+        for x in 0..buf.len() {
             let item = self.read_item();
             if item.is_some() {
                 buf[x] = item.unwrap();
@@ -94,12 +86,10 @@ impl Read for Stream<u8>
     }
 }
 
-impl Write for Stream<u8>
-{
+impl Write for Stream<u8> {
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
         let x = 0;
-        for x in 0..buf.len()
-        {
+        for x in 0..buf.len() {
             self.write_item(buf[x]);
         };
         Result::Ok(x)
