@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::Stream;
-    use std::io::{Write, Read};
+    use std::io::{Read, Write};
 
     #[test]
     fn simple() {
@@ -39,11 +39,11 @@ mod tests {
     }
 }
 
+use std::io::{Error, ErrorKind, Read, Result, Write};
 use std::vec::Vec;
-use std::io::{Read, Result, Error, ErrorKind, Write};
 
 pub struct Stream<T> {
-    buf: Vec<T>
+    buf: Vec<T>,
 }
 
 impl<T> Stream<T> {
@@ -81,7 +81,7 @@ impl Read for Stream<u8> {
             } else {
                 return Err(Error::new(ErrorKind::Other, "Read error"));
             }
-        };
+        }
         Result::Ok(x)
     }
 }
@@ -91,7 +91,7 @@ impl Write for Stream<u8> {
         let x = 0;
         for x in 0..buf.len() {
             self.write_item(buf[x]);
-        };
+        }
         Result::Ok(x)
     }
 
