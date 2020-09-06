@@ -40,6 +40,7 @@ mod tests {
 }
 
 use std::io::{Error, ErrorKind, Read, Result, Write};
+use std::iter::Iterator;
 use std::vec::Vec;
 
 pub struct Stream<T> {
@@ -87,6 +88,14 @@ impl Read for Stream<u8> {
             }
         }
         Result::Ok(x)
+    }
+}
+
+impl<T> Iterator for Stream<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.read_item()
     }
 }
 
