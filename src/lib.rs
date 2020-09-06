@@ -58,6 +58,10 @@ impl<T> Stream<T> {
         res
     }
 
+    pub fn peek_item(&self) -> Option<&T> {
+        self.buf.first()
+    }
+
     pub fn write_item(&mut self, item: T) {
         self.buf.push(item);
     }
